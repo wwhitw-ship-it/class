@@ -102,13 +102,14 @@
                 
                 <!-- Video 1 -->
                 <div class="flex flex-col items-center">
-                    <!-- FIXED: Removed hover:border-neonGreen/50 and changed transition-all to transition-shadow to prevent layout shift -->
-                    <div class="phone-frame w-64 h-[450px] group transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(204,255,0,0.4)]">
+                    <!-- FIXED: Adjusted height to h-[437px] to perfectly match 9:16 aspect ratio inside the 12px border, preventing black bars -->
+                    <div class="phone-frame w-64 h-[437px] group transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(204,255,0,0.4)]">
                         <div class="phone-notch"></div>
                         <!-- Embedded Google Drive Video -->
                         <iframe 
                             src="https://drive.google.com/file/d/18W2q77arlZmahJZe7OQL7hCDnM8aNJph/preview" 
-                            class="w-full h-full object-cover z-10 relative bg-gray-900" 
+                            class="w-full h-full z-10 relative bg-gray-900" 
+                            style="border:0;"
                             allow="autoplay; encrypted-media" 
                             allowfullscreen>
                         </iframe>
@@ -121,8 +122,8 @@
 
                 <!-- Video 2 -->
                 <div class="flex flex-col items-center">
-                    <!-- FIXED: Removed hover:border-neonGreen/50 and changed transition-all to transition-shadow for consistency -->
-                    <div class="phone-frame w-64 h-[450px] group cursor-pointer transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(204,255,0,0.4)]">
+                    <!-- FIXED: Adjusted height to h-[437px] for consistency -->
+                    <div class="phone-frame w-64 h-[437px] group cursor-pointer transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(204,255,0,0.4)]">
                         <div class="phone-notch"></div>
                         <div class="w-full h-full bg-gray-900 flex flex-col justify-center items-center text-gray-500 relative overflow-hidden">
                              <div class="absolute inset-0 opacity-5" style="background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px); background-size: 20px 20px;"></div>
