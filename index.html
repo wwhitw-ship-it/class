@@ -39,54 +39,34 @@
         ::-webkit-scrollbar-track { background: var(--dark-wood); }
         ::-webkit-scrollbar-thumb { background: var(--bronze-gold); border-radius: 3px; }
 
-        .featured-badge {
+        .list-gold-bullet li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .list-gold-bullet li::before {
+            content: "•";
+            color: var(--bronze-gold);
             position: absolute;
-            top: 0; left: 50%; transform: translate(-50%, -50%);
-            background: var(--bronze-gold); color: var(--dark-wood);
-            padding: 4px 20px; border-radius: 99px; font-weight: 900; font-size: 0.75rem; letter-spacing: 0.1em;
-            white-space: nowrap;
-            z-index: 20;
-        }
-
-        /* Modal Base */
-        .modal-overlay { background-color: rgba(30, 25, 22, 0.98); backdrop-filter: blur(20px); z-index: 100; padding: 1rem; }
-        .modal-content { border: 1px solid rgba(201, 166, 122, 0.3); max-height: 92vh; overflow-y: auto; }
-        .vertical-video-wrapper { position: relative; width: 100%; height: 100%; background: #000; }
-
-        /* Custom Scrollbar for inner content */
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--bronze-gold); border-radius: 2px; }
-
-        /* Form Styling for the booking section */
-        input, textarea, select {
-            background-color: rgba(255, 255, 255, 0.05) !important;
-            border: 1px solid rgba(201, 166, 122, 0.2) !important;
-            color: var(--cream-white) !important;
-            transition: all 0.3s ease;
-            appearance: none; 
-        }
-        input:focus, select:focus {
-            border-color: var(--bronze-gold) !important;
-            outline: none;
-            background-color: rgba(255, 255, 255, 0.08) !important;
+            left: 0;
+            font-weight: bold;
         }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col">
 
-    <!-- 1. Experiential Event (快閃體驗課) -->
-    <section id="event-march" class="py-24 bg-[#342c27] flex-grow flex items-center">
+    <!-- 1. Hero / Main Event Info (主視覺與核心資訊) -->
+    <section id="hero" class="py-20 md:py-24 bg-[#342c27]">
         <div class="container mx-auto px-6 max-w-6xl">
             <div class="bg-[#3d332d] rounded-[48px] border-2 border-[#c9a67a] p-8 md:p-12 relative overflow-hidden shadow-2xl">
                 <div class="absolute top-0 right-0 gold-bg text-[#3d332d] px-12 py-2 rotate-45 translate-x-10 translate-y-4 font-black tracking-widest text-sm">LIMITED</div>
                 <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 relative z-10 text-left">
                     <div class="w-full lg:w-1/2">
                         <span class="gold-text font-bold tracking-widest uppercase mb-4 block">Experiential Course</span>
-                        <h2 class="text-2xl md:text-3xl lg:text-4xl font-light mb-6 leading-tight text-white">
+                        <h1 class="text-2xl md:text-3xl lg:text-4xl font-light mb-6 leading-tight text-white">
                             3/26(四)桃園、3/27(五)台北 雙日快閃<br>
                             <span class="gold-text text-3xl md:text-5xl lg:text-6xl font-bold mt-2 block">零基礎小白也能 0→1 <br class="lg:hidden">兩小時拍出短影音</span>
-                        </h2>
+                        </h1>
                         
                         <div class="mb-10">
                             <p class="text-lg md:text-xl font-bold mb-2 text-white">想自己拍短影音卻....</p>
@@ -94,9 +74,7 @@
                         </div>
                         
                         <div class="flex flex-col sm:flex-row gap-4 flex-wrap">
-                            <button class="w-full sm:w-auto px-8 py-4 gold-bg text-[#3d332d] rounded-full font-black text-lg shadow-2xl cursor-default text-center whitespace-nowrap">現在聯繫你的業務</button>
-                            <button onclick="window.openModal('event_intro')" class="w-full sm:w-auto px-6 py-4 border border-[#c9a67a] text-[#c9a67a] rounded-full font-bold text-base hover:bg-[#c9a67a] hover:text-[#3d332d] active:scale-95 transition-all text-center whitespace-nowrap">課程介紹</button>
-                            <button onclick="window.openModal('event_locations')" class="w-full sm:w-auto px-6 py-4 border border-[#c9a67a] text-[#c9a67a] rounded-full font-bold text-base hover:bg-[#c9a67a] hover:text-[#3d332d] active:scale-95 transition-all text-center whitespace-nowrap">課程地點資訊</button>
+                            <button class="w-full sm:w-auto px-10 py-4 gold-bg text-[#3d332d] rounded-full font-black text-xl shadow-2xl cursor-default text-center whitespace-nowrap hover:scale-105 transition-transform">現在聯繫你的業務</button>
                         </div>
                     </div>
                     
@@ -111,169 +89,171 @@
         </div>
     </section>
 
-    <!-- Plan/Info Modal (通用彈窗) -->
-    <div id="sample-modal" class="modal-overlay fixed inset-0 hidden flex items-center justify-center text-left">
-        <div class="modal-content bg-[#3d332d] rounded-[32px] relative w-full max-w-4xl p-6 md:p-12 flex flex-col lg:flex-row gap-10 text-left">
-            <button onclick="window.closeModal()" class="absolute top-6 right-6 text-white opacity-40 hover:opacity-100 transition-opacity"><i data-lucide="x" class="w-8 h-8"></i></button>
-            
-            <!-- Video Container (Hidden if no video) -->
-            <div id="video-wrapper" class="hidden w-full max-w-[260px] mx-auto shrink-0 aspect-[9/16] bg-black rounded-3xl overflow-hidden border border-[#c9a67a33] shadow-2xl">
-                <div id="modal-video-container" class="vertical-video-wrapper"></div>
+    <!-- 2. Course Introduction (課程介紹 - 展開為區塊) -->
+    <section class="py-20 bg-[#3d332d] border-t border-white/5">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="text-center mb-16">
+                <span class="gold-text font-bold tracking-widest uppercase mb-2 block">Course Detail</span>
+                <h2 class="text-3xl md:text-4xl font-light text-white">課程介紹與說明</h2>
+                <div class="w-20 h-1 gold-bg mx-auto mt-6"></div>
             </div>
 
-            <div class="flex-1 flex flex-col justify-center">
-                <h2 id="modal-title" class="text-3xl gold-text font-light mb-6"></h2>
-                <div id="modal-features-box" class="p-6 bg-black/20 rounded-3xl border border-white/5 space-y-4 mb-8">
-                    <!-- Content Injected Here -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Left Column -->
+                <div class="space-y-12">
+                    <div>
+                        <h4 class="text-xl font-bold gold-text mb-4 flex items-center gap-2"><i data-lucide="users" class="w-5 h-5"></i> 課程對象</h4>
+                        <p class="opacity-60 mb-4 text-sm">零基礎想要拍攝製作短影音的人</p>
+                        <ul class="list-gold-bullet space-y-3 opacity-90">
+                            <li>一直想做短影音，一直看別人 <br><span class="text-[#c9a67a] text-sm">→ 懷疑自己是不是沒有機會</span></li>
+                            <li>自己拍了一兩支，但是沒有辦法持續拍 <br><span class="text-[#c9a67a] text-sm">→ 正在找可以持續拍的方法</span></li>
+                            <li>有拍過但是花了太多時間去想 <br><span class="text-[#c9a67a] text-sm">→ 正在找可以快速複製的方法</span></li>
+                            <li>想要拍短影音，但只要一看到鏡頭就緊張 <br><span class="text-[#c9a67a] text-sm">→ 想要放棄但又覺得不想放棄</span></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xl font-bold gold-text mb-4 flex items-center gap-2"><i data-lucide="graduation-cap" class="w-5 h-5"></i> 講師背景</h4>
+                        <div class="p-6 bg-white/5 rounded-2xl border border-white/10">
+                            <p class="font-bold text-lg mb-2">RENATA蕾娜塔髮品 影音行銷經理</p>
+                            <p class="opacity-80 text-sm leading-relaxed">品牌影音企劃 4 年以上經驗<br>協助他人製作短影音至少 1000 支(含)以上</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xl font-bold gold-text mb-4 flex items-center gap-2"><i data-lucide="gift" class="w-5 h-5"></i> 獨享福利</h4>
+                        <ul class="list-gold-bullet space-y-3 opacity-90">
+                            <li><strong>3種動作</strong>：減緩緊張、穩定身心、順暢說話。</li>
+                            <li><strong>3份表格</strong>：基礎定位、主題指引、萬用大綱。</li>
+                            <li><strong>2項祕訣</strong>：拍攝秘訣、剪輯秘訣。</li>
+                            <li><strong>服務優惠</strong>：憑體驗課的限動回饋截圖，就可以享有6個月內其他服務9折優惠！</li>
+                        </ul>
+                    </div>
                 </div>
-                <button onclick="window.closeModal()" class="w-full py-5 gold-bg text-[#3d332d] rounded-full font-black shadow-xl text-center whitespace-nowrap hover:brightness-110 transition-all">請聯繫業務報名</button>
+
+                <!-- Right Column -->
+                <div class="space-y-12">
+                    <div>
+                        <h4 class="text-xl font-bold gold-text mb-4 flex items-center gap-2"><i data-lucide="star" class="w-5 h-5"></i> 課程特色</h4>
+                        <ul class="list-gold-bullet space-y-4 opacity-90">
+                            <li>不用過多理論，現場直接說明製作整體過程與邏輯 <br><span class="text-[#c9a67a] text-sm">→ 快速了解製作過程，以及需要準備好的東西</span></li>
+                            <li>一份萬用表格，可以用在任何影片製作邏輯 <br><span class="text-[#c9a67a] text-sm">→ 減少思考焦慮，提升製作效率</span></li>
+                            <li>全程不用昂貴器材，只需要一支手機 <br><span class="text-[#c9a67a] text-sm">→ 不用多餘花費</span></li>
+                            <li>消除面對鏡頭緊張的技術，實用在任何場合 <br><span class="text-[#c9a67a] text-sm">→ 輕鬆面對鏡頭，拍出來的模樣就像日常中的你</span></li>
+                            <li>課程最後提供紫微斗數限量名額算命盤 <br><span class="text-[#c9a67a] text-sm">→ 對焦你的個人特質和適合的拍攝方向</span></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xl font-bold gold-text mb-4 flex items-center gap-2"><i data-lucide="book-open" class="w-5 h-5"></i> 課程大綱</h4>
+                        <div class="space-y-4">
+                            <div class="flex gap-4">
+                                <span class="font-black text-[#c9a67a] text-xl">01</span>
+                                <div><strong class="block mb-1">拍攝前準備</strong><span class="opacity-70 text-sm">帶你放下心防，更能拍出好影片！</span></div>
+                            </div>
+                            <div class="flex gap-4">
+                                <span class="font-black text-[#c9a67a] text-xl">02</span>
+                                <div><strong class="block mb-1">5秒定位</strong><span class="opacity-70 text-sm">釐清最基礎的個人定位，一句話幫你找出來！</span></div>
+                            </div>
+                            <div class="flex gap-4">
+                                <span class="font-black text-[#c9a67a] text-xl">03</span>
+                                <div><strong class="block mb-1">主題模板</strong><span class="opacity-70 text-sm">用一張路線指引表格，直接一步步發展出妳的主題方向！</span></div>
+                            </div>
+                            <div class="flex gap-4">
+                                <span class="font-black text-[#c9a67a] text-xl">04</span>
+                                <div><strong class="block mb-1">腳本大綱</strong><span class="opacity-70 text-sm">萬用腳本大綱，讓你複製到所有影片！</span></div>
+                            </div>
+                            <div class="flex gap-4">
+                                <span class="font-black text-[#c9a67a] text-xl">05</span>
+                                <div><strong class="block mb-1">拍攝與剪輯</strong><span class="opacity-70 text-sm">給你拍攝畫面漂亮的秘訣，以及快速剪輯方法！</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- 3. Locations (地點資訊 - 展開為區塊) -->
+    <section class="py-20 bg-[#342c27] border-t border-white/5">
+        <div class="container mx-auto px-6 max-w-4xl text-center">
+            <span class="gold-text font-bold tracking-widest uppercase mb-2 block">Location Info</span>
+            <h2 class="text-3xl md:text-4xl font-light text-white mb-12">課程地點資訊</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Card 1 -->
+                <div class="p-8 bg-[#3d332d] rounded-3xl border border-[#c9a67a]/30 shadow-xl hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-[#c9a67a]"></div>
+                    <div class="w-12 h-12 rounded-full bg-[#c9a67a]/10 flex items-center justify-center mx-auto mb-6 group-hover:bg-[#c9a67a] transition-colors">
+                        <i data-lucide="map-pin" class="w-6 h-6 gold-text group-hover:text-[#3d332d]"></i>
+                    </div>
+                    <p class="font-bold gold-text mb-6 text-2xl tracking-wider">桃園場</p>
+                    <ul class="space-y-4 opacity-90 text-left inline-block w-full">
+                        <li class="flex items-center gap-3 border-b border-white/5 pb-2">
+                            <i data-lucide="calendar" class="w-4 h-4 gold-text"></i>
+                            <span>3/26 (週四)</span>
+                        </li>
+                        <li class="flex items-center gap-3 border-b border-white/5 pb-2">
+                            <i data-lucide="clock" class="w-4 h-4 gold-text"></i>
+                            <span>12:00 - 14:00 (2hrs)</span>
+                        </li>
+                        <li class="flex items-center gap-3 border-b border-white/5 pb-2">
+                            <i data-lucide="building" class="w-4 h-4 gold-text"></i>
+                            <span>金字塔學苑</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="map" class="w-4 h-4 gold-text mt-1"></i>
+                            <span>桃園市中壢區延平路326號11樓之1</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="p-8 bg-[#3d332d] rounded-3xl border border-[#c9a67a]/30 shadow-xl hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-[#c9a67a]"></div>
+                    <div class="w-12 h-12 rounded-full bg-[#c9a67a]/10 flex items-center justify-center mx-auto mb-6 group-hover:bg-[#c9a67a] transition-colors">
+                        <i data-lucide="map-pin" class="w-6 h-6 gold-text group-hover:text-[#3d332d]"></i>
+                    </div>
+                    <p class="font-bold gold-text mb-6 text-2xl tracking-wider">台北場</p>
+                    <ul class="space-y-4 opacity-90 text-left inline-block w-full">
+                        <li class="flex items-center gap-3 border-b border-white/5 pb-2">
+                            <i data-lucide="calendar" class="w-4 h-4 gold-text"></i>
+                            <span>3/27 (週五)</span>
+                        </li>
+                        <li class="flex items-center gap-3 border-b border-white/5 pb-2">
+                            <i data-lucide="clock" class="w-4 h-4 gold-text"></i>
+                            <span>12:00 - 14:00 (2hrs)</span>
+                        </li>
+                        <li class="flex items-center gap-3 border-b border-white/5 pb-2">
+                            <i data-lucide="building" class="w-4 h-4 gold-text"></i>
+                            <span>台北蒔蒔學院</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="map" class="w-4 h-4 gold-text mt-1"></i>
+                            <span>台北市中山區中山北路二段99號6樓之1</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-16">
+                <p class="opacity-60 text-sm mb-6">準備好開始您的影音創作旅程了嗎？</p>
+                <button class="px-12 py-4 gold-bg text-[#3d332d] rounded-full font-black text-lg shadow-2xl cursor-default hover:scale-105 transition-transform">現在聯繫你的業務報名</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-[#2a221d] text-center border-t border-white/5">
+        <div class="container mx-auto px-6">
+            <p class="opacity-30 text-xs tracking-widest uppercase">
+                RENATA © 2026 SALON. BORN WITH TALENT, FLOW WITH ART.
+            </p>
+        </div>
+    </footer>
 
     <script>
-        // Data Configuration
-        const planDetails = {
-            'event': { 
-                name: '體驗課程 ($2,980)', 
-                features: ['現場天賦解盤', '30秒影音產出', '引導式對談體驗'], 
-                video: 'https://drive.google.com/file/d/1aHvR0BNRP0hku-XYLtHEAy_sojLbjq55/preview' 
-            },
-            'event_intro': {
-                name: '課程介紹與說明',
-                customHtml: `
-                    <div class="space-y-8 text-sm md:text-base h-[60vh] md:h-auto overflow-y-auto pr-2 custom-scrollbar">
-                        <div>
-                            <h4 class="text-lg font-bold gold-text mb-3">● 課程對象：零基礎想要拍攝製作短影音的人</h4>
-                            <ul class="space-y-2 opacity-80 list-decimal list-inside pl-2">
-                                <li>一直想做短影音，一直看別人 <span class="text-[#c9a67a]">→ 所以就懷疑自己是不是沒有機會</span></li>
-                                <li>自己拍了一兩支，但是沒有辦法持續拍 <span class="text-[#c9a67a]">→ 所以在找可以持續拍的方法</span></li>
-                                <li>有拍過但是花了太多時間去想 <span class="text-[#c9a67a]">→ 所以在找可以快速複製的方法</span></li>
-                                <li>想要拍短影音，但只要一看到鏡頭就緊張 <span class="text-[#c9a67a]">→ 所以想要放棄但又覺得不想放棄</span></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="text-lg font-bold gold-text mb-3">● 講師背景</h4>
-                            <p class="opacity-80">RENATA蕾娜塔髮品 影音行銷經理 │ 品牌影音企劃4年以上經驗 │ 協助他人製作短影音至少1000支(含)以上</p>
-                        </div>
-                        <div>
-                            <h4 class="text-lg font-bold gold-text mb-3">● 課程特色</h4>
-                            <ul class="space-y-2 opacity-80 list-decimal list-inside pl-2">
-                                <li>不用過多理論，現場直接說明製作整體過程與邏輯 <span class="text-[#c9a67a]">→ 快速了解製作過程，以及需要準備好的東西</span></li>
-                                <li>一份萬用表格，可以用在任何影片製作邏輯 <span class="text-[#c9a67a]">→ 減少思考焦慮，提升製作效率</span></li>
-                                <li>全程不用昂貴器材，只需要一支手機 <span class="text-[#c9a67a]">→ 不用多餘花費</span></li>
-                                <li>消除面對鏡頭緊張的技術，實用在任何場合 <span class="text-[#c9a67a]">→ 輕鬆面對鏡頭，拍出來的模樣就像日常中的你</span></li>
-                                <li>課程最後提供紫微斗數限量名額算命盤 <span class="text-[#c9a67a]">→ 對教你的個人特質和適合的拍攝方向</span></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="text-lg font-bold gold-text mb-3">● 課程大綱</h4>
-                            <ul class="space-y-2 opacity-80 list-decimal list-inside pl-2">
-                                <li><strong>拍攝前準備</strong> <span class="text-[#c9a67a]">→ 帶你放下心防，拍出好影片！</span></li>
-                                <li><strong>5秒定位</strong> <span class="text-[#c9a67a]">→ 一句話幫你找出來！</span></li>
-                                <li><strong>主題模板</strong> <span class="text-[#c9a67a]">→ 路線指引表格，發展出妳的主題！</span></li>
-                                <li><strong>腳本大綱</strong> <span class="text-[#c9a67a]">→ 萬用腳本大綱複製使用！</span></li>
-                                <li><strong>拍攝實戰</strong> <span class="text-[#c9a67a]">→ 畫面漂亮的秘訣與緊張鬆解法！</span></li>
-                                <li><strong>剪輯心法</strong> <span class="text-[#c9a67a]">→ 快速剪輯方法！</span></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="text-lg font-bold gold-text mb-3">● 獨享福利</h4>
-                            <ul class="space-y-2 opacity-80 list-decimal list-inside pl-2">
-                                <li><strong>3種動作</strong>：減緩緊張、穩定身心。</li>
-                                <li><strong>3份表格</strong>：基礎定位、主題指引、萬用大綱。</li>
-                                <li><strong>服務優惠</strong>：憑體驗課限動回饋截圖，享後續服務9折優惠！</li>
-                            </ul>
-                        </div>
-                    </div>
-                `,
-                video: '' 
-            },
-            'event_locations': {
-                name: '課程地點資訊',
-                customHtml: `
-                    <div class="space-y-6 md:space-y-0 md:grid md:grid-cols-2 md:gap-6 text-sm md:text-base">
-                        <div class="p-6 bg-white/5 rounded-xl border border-white/10 text-center h-full">
-                            <p class="font-bold gold-text mb-6 text-xl tracking-wider border-b border-white/10 pb-4">【第一場 桃園場】</p>
-                            <ul class="space-y-4 opacity-90 text-left inline-block">
-                                <li>📅 日期：3/26 (週四)</li>
-                                <li>⏰ 時間：12:00 - 14:00 2hrs</li>
-                                <li>📍 地點：金字塔學苑</li>
-                                <li>🏢 地址：桃園市中壢區延平路326號11樓之1</li>
-                            </ul>
-                        </div>
-                        <div class="p-6 bg-white/5 rounded-xl border border-white/10 text-center h-full">
-                            <p class="font-bold gold-text mb-6 text-xl tracking-wider border-b border-white/10 pb-4">【第二場 台北場】</p>
-                            <ul class="space-y-4 opacity-90 text-left inline-block">
-                                <li>📅 日期：3/27 (週五)</li>
-                                <li>⏰ 時間：12:00 - 14:00 2hrs</li>
-                                <li>📍 地點：台北蒔蒔學院</li>
-                                <li>🏢 地址：台北市中山區中山北路二段99號6樓之1</li>
-                            </ul>
-                        </div>
-                    </div>
-                `,
-                video: '' 
-            }
-        };
-
-        // Modal Logic
-        window.openModal = (tabId) => {
-            const d = planDetails[tabId];
-            if (!d) return;
-
-            document.getElementById('modal-title').innerText = d.name;
-            const box = document.getElementById('modal-features-box');
-            const videoWrapper = document.getElementById('video-wrapper');
-            const videoContainer = document.getElementById('modal-video-container');
-            
-            // Check for custom HTML content
-            if (d.customHtml) {
-                box.innerHTML = d.customHtml;
-            } else {
-                box.innerHTML = (d.features || []).map(f => `<div class="flex items-center gap-3 text-left"><i data-lucide="check" class="w-5 h-5 gold-text shrink-0"></i><span class="opacity-80">${f}</span></div>`).join('');
-            }
-            
-            // Handle Video
-            if (d.video) {
-                videoWrapper.classList.remove('hidden');
-                videoContainer.innerHTML = `<iframe class="w-full h-full" src="${d.video}" frameborder="0" allowfullscreen></iframe>`;
-            } else {
-                videoWrapper.classList.add('hidden');
-                videoContainer.innerHTML = '';
-            }
-
-            document.getElementById('sample-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            lucide.createIcons();
-        };
-
-        window.closeModal = () => { 
-            document.getElementById('sample-modal').classList.add('hidden'); 
-            document.getElementById('modal-video-container').innerHTML = ''; 
-            document.body.style.overflow = ''; 
-        };
-        
-        window.selectPlanAndScroll = (id) => { 
-            const d = planDetails[id];
-            if(d) document.getElementById('selected_plan_display').value = d.name;
-            document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
-            setTimeout(() => document.getElementById('form_name').focus(), 800);
-        };
-        
-        window.closeModalAndScrollToBooking = () => { 
-            const title = document.getElementById('modal-title').innerText;
-            // document.getElementById('selected_plan_display').value = title;
-            window.closeModal(); 
-            // document.getElementById('booking').scrollIntoView({behavior:'smooth'}); 
-            // setTimeout(() => document.getElementById('form_name').focus(), 800);
-        };
-
-        window.onclick = (e) => { 
-            if(e.target.id === 'sample-modal') window.closeModal();
-        };
-
-        // Initialize
+        // Initialize Icons
         window.onload = () => { 
             lucide.createIcons(); 
         };
